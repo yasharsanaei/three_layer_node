@@ -8,12 +8,13 @@ export enum RestType {
 }
 
 export class Rest {
-    type: RestType;
+    // type: RestType;
+    type: 'get' | 'post' | 'put' | 'delete';
     route: string;
     service: any;
     method: string;
 
-    constructor(type: RestType, route: string, service: any, method: string) {
+    constructor(type: 'get' | 'post' | 'put' | 'delete', route: string, service: any, method: string) {
         this.type = type;
         this.route = route;
         this.service = service;
@@ -23,13 +24,13 @@ export class Rest {
     static BaseRestPoints(service:any,entryPoint: string) {
         return [
             new Rest(
-                RestType.get,
+                'get',
                 `/${entryPoint}`,
                 service,
                 'getAll'
             ),
             new Rest(
-                RestType.get,
+                'get',
                 `/${entryPoint}/:id`,
                 service,
                 'getById'

@@ -15,7 +15,13 @@ createConnection().then(async connection => {
 
     app.listen(3000);
 
-    app.use(express.static('./src/views/assets'));
+
+    // app.use(express.static(path.join(__dirname, '/views/assets/')));
+    app.use(express.static(__dirname));
+
+
+    console.log('__dirname: ', __dirname);
+
     app.use(morgan('dev'));
     app.use(bodyParser.json());
 

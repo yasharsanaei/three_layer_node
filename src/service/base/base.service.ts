@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from 'express';
 import {BaseRepository} from '../../repository/base/base.repository';
+import {isIdInvalid} from '../../util/idValidation';
 
-export class BaseService<T,R extends BaseRepository<T>> {
+export class BaseService<T, R extends BaseRepository<T>> {
 
     repository: R;
 
@@ -15,7 +16,8 @@ export class BaseService<T,R extends BaseRepository<T>> {
 
     async getById(request: Request, response: Response, next: NextFunction): Promise<T> {
         const id = request.params.id;
-        return await this.repository.findOneById(id);
+        if (isIdInvalid(id)) next();
+        else return await this.repository.findOneById(id);
     }
 
 }
