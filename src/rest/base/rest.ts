@@ -7,20 +7,20 @@ export enum RestType {
     delete = 'delete'
 }
 
-export class Rest<T extends BaseService<any, any>> {
+export class Rest {
     type: RestType;
     route: string;
-    service: T;
+    service: any;
     method: string;
 
-    constructor(type: RestType, route: string, service: T, method: string) {
+    constructor(type: RestType, route: string, service: any, method: string) {
         this.type = type;
         this.route = route;
         this.service = service;
         this.method = method;
     }
 
-    static BaseRestPoints(service,entryPoint: string) {
+    static BaseRestPoints(service:any,entryPoint: string) {
         return [
             new Rest(
                 RestType.get,
@@ -30,7 +30,7 @@ export class Rest<T extends BaseService<any, any>> {
             ),
             new Rest(
                 RestType.get,
-                `/${entryPoint}`,
+                `/${entryPoint}/:id`,
                 service,
                 'getById'
             ),
