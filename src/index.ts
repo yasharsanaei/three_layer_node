@@ -25,9 +25,9 @@ createConnection().then(async connection => {
     });
 
     // let blog = new BlogEntity();
-    // blog.title = 'Blog number 1';
-    // blog.brief = 'Blog number brief is this.';
-    // blog.content = 'Blog number 1 content is this. it should be long and ver ver ver ver ver lorem and other things.';
+    // blog.title = 'Blog number 2';
+    // blog.brief = 'Blog number 2 brief is this.';
+    // blog.content = 'Blog number 2, updating BlogEntity class...';
     //
     // await connection.manager
     //     .save<BlogEntity>(blog)
