@@ -1,8 +1,10 @@
 import 'reflect-metadata';
 import {createConnection} from 'typeorm';
-import express, {Express, Request, Response} from 'express';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
+import * as express from 'express';
+import {Express, Request, Response} from 'express';
+import * as bodyParser from 'body-parser';
+import * as morgan from 'morgan';
+import {BlogEntity} from './repository/entity/blog.entity';
 
 createConnection().then(async connection => {
 
@@ -10,6 +12,8 @@ createConnection().then(async connection => {
 
     app.set('view engine', 'ejs');
     app.set('views', './src/views');
+
+    app.listen(3000);
 
     app.use(express.static('./src/views/assets'));
     app.use(morgan('dev'));
@@ -20,23 +24,17 @@ createConnection().then(async connection => {
         res.status(404).render('404', {title: '404'});
     });
 
-    app.listen(3000);
+    // let blog = new BlogEntity();
+    // blog.title = 'Blog number 1';
+    // blog.brief = 'Blog number brief is this.';
+    // blog.content = 'Blog number 1 content is this. it should be long and ver ver ver ver ver lorem and other things.';
+    //
+    // await connection.manager
+    //     .save<BlogEntity>(blog)
+    //     .then(blog => {
+    //         console.log('..::Saved::.. ',blog)
+    //     });
 
     console.log('Express server has started on port 3000....');
-
-
-    // console.log("Inserting a new user into the database...");
-    // const user = new User();
-    // user.firstName = "Timber";
-    // user.lastName = "Saw";
-    // user.age = 25;
-    // await connection.manager.save(user);
-    // console.log("Saved a new user with id: " + user.id);
-    //
-    // console.log("Loading users from the database...");
-    // const users = await connection.manager.find(User);
-    // console.log("Loaded users: ", users);
-    //
-    // console.log("Here you can setup and run express/koa/any other framework.");
 
 }).catch(error => console.log(error));
