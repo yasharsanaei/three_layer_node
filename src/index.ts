@@ -4,7 +4,6 @@ import * as express from 'express';
 import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
-import {BlogEntity} from './repository/entity/blog.entity';
 
 createConnection().then(async connection => {
 
