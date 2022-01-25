@@ -12,7 +12,7 @@ export class BaseRepository<T> {
         return this.repository.find();
     }
 
-    findOne(id: number | string): Promise<T> {
+    findOneById(id: number | string): Promise<T> {
         return this.repository.findOne(id);
     }
 

@@ -1,21 +1,21 @@
 import {NextFunction, Request, Response} from 'express';
-import {Repository} from 'typeorm';
+import {BaseRepository} from '../../repository/base/base.repository';
 
-export class BaseService<T> {
+export class BaseService<T,R extends BaseRepository<T>> {
 
-    repository: Repository<T>;
+    repository: R;
 
-    constructor(repository?: Repository<T>) {
-        this.repository = null;
+    constructor(repository: R) {
+        this.repository = repository;
     }
 
     async getAll(request: Request, response: Response, next: NextFunction): Promise<T[]> {
-        return await this.repository.find();
+        return await this.repository.findAll();
     }
 
     async getById(request: Request, response: Response, next: NextFunction): Promise<T> {
         const id = request.params.id;
-        return await this.repository.findOne(id);
+        return await this.repository.findOneById(id);
     }
 
 }
