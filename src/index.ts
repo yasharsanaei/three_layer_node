@@ -19,26 +19,40 @@ createConnection().then(async connection => {
     app.use(morgan('dev'));
     app.use(bodyParser.json());
 
-    const Routes = [
+    const RestPoints = [
         {
-            method: 'get/post/put/delete/',
+            type: 'get/post/put/delete/',
             route: 'api-path',
-            controller: {},
-            action: 'methodName',
+            service: {},
+            method: 'methodName',
         },
     ];
 
-    Routes.forEach(route => {
-        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next);
-            if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
+    RestPoints.forEach(
+        rest => {
+            (app as any)[rest.type](rest.route, (req: Request, res: Response, next: Function) => {
+                const result = (new (rest.service as any))[rest.method](req, res, next);
+                if (result instanceof Promise) {
+                    result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
 
-            } else if (result !== null && result !== undefined) {
-                res.json(result);
-            }
-        });
-    });
+                } else if (result !== null && result !== undefined) {
+                    res.json(result);
+                }
+            });
+        },
+    );
+
+    // Routes.forEach(route => {
+    //     (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
+    //         const result = (new (route.controller as any))[route.action](req, res, next);
+    //         if (result instanceof Promise) {
+    //             result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
+    //
+    //         } else if (result !== null && result !== undefined) {
+    //             res.json(result);
+    //         }
+    //     });
+    // });
 
 
     app.use((req: Request, res: Response) => {
