@@ -4,7 +4,7 @@ import * as express from 'express';
 import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
-import {ApisRest} from './rest/base/apisRest';
+import {ApisRest} from './rest/base/apis.rest';
 
 createConnection().then(async connection => {
 
