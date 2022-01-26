@@ -45,14 +45,15 @@ export class BlogResource extends BaseResource<BlogService> {
 
 }
 
-export const ResourceMethods = (resource: BlogResource): string[] => {
+const ResourceMethods = (resource: BlogResource): string[] => {
     return Reflect.getMetadataKeys(resource);
 };
 
 export const CreateApiPaths = (app: Express, resource: BlogResource) => {
-    const type = Reflect.getMetadata('getAll', resource)['type'];
-    const route = Reflect.getMetadata('getAll', resource)['route'];
+    console.log('-------> Methods: ', ResourceMethods(resource));
     ResourceMethods(resource).forEach(m => {
+        const type = Reflect.getMetadata(m, resource)['type'];
+        const route = Reflect.getMetadata(m, resource)['route'];
         app[type](`/api${resource.basePath}${route}`, (req, res, next) => {
             const result = resource[m](req, res, next);
             if (result instanceof Promise) {
