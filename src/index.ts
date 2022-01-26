@@ -5,6 +5,7 @@ import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import {ApisRest} from './rest/base/apis.rest';
+import * as path from 'path';
 
 createConnection().then(async connection => {
 
@@ -17,7 +18,7 @@ createConnection().then(async connection => {
 
 
     // app.use(express.static(path.join(__dirname, '/views/assets/')));
-    app.use(express.static(__dirname));
+    app.use('/assets', express.static(path.join(__dirname, '/views/assets')));
 
 
     console.log('__dirname: ', __dirname);
