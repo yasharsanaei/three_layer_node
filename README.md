@@ -1,4 +1,4 @@
-# Awesome Project Build with TypeORM
+# Three Layer Node Server in TypeScript with TypeORM
 
 Steps to run this project:
 
