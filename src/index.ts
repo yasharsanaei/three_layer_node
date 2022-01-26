@@ -6,6 +6,8 @@ import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import {ApisRest} from './rest/base/apis.rest';
 import * as path from 'path';
+import {PageController} from './controller/page.controller';
+import {GetPageRoutes} from './util/util';
 
 createConnection().then(async connection => {
 
@@ -16,15 +18,23 @@ createConnection().then(async connection => {
 
     app.listen(3000);
 
-
-    // app.use(express.static(path.join(__dirname, '/views/assets/')));
     app.use('/assets', express.static(path.join(__dirname, '/views/assets')));
-
-
-    console.log('__dirname: ', __dirname);
-
     app.use(morgan('dev'));
     app.use(bodyParser.json());
+
+    GetPageRoutes(new PageController()).forEach(
+        rest => {
+            (app as any)[rest.type](rest.route, (req: Request, res: Response, next: Function) => {
+                const result = (new (rest.service as any))[rest.method](req, res, next);
+                if (result instanceof Promise) {
+                    result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
+
+                } else if (result !== null && result !== undefined) {
+                    res.json(result);
+                }
+            });
+        },
+    );
 
     ApisRest.forEach(
         rest => {
@@ -39,7 +49,6 @@ createConnection().then(async connection => {
             });
         },
     );
-
 
     app.use((req: Request, res: Response) => {
         res.status(404).render('404', {title: '404'});

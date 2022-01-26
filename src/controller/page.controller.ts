@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from 'express';
-import {Rest} from '../rest/base/rest';
 import {BlogService} from '../service/blog.service';
 import {BlogEntity} from '../repository/entity/blog.entity';
+import 'reflect-metadata';
+import {PageRoute} from '../util/util';
 
 export class PageController {
 
@@ -10,38 +11,20 @@ export class PageController {
     constructor() {
     }
 
+    @PageRoute('/')
     async home(request: Request, response: Response, next: NextFunction) {
         const blogList: BlogEntity[] = await this.blogService.getAll(request, response, next);
         response.render('index', {title: 'Blogs | Home', blogs: blogList});
     }
 
+    @PageRoute('/blogs')
     async blogs(request: Request, response: Response, next: NextFunction) {
         response.redirect('/');
     }
 
+    @PageRoute('/blogs/create')
     async createBlog(request: Request, response: Response, next: NextFunction) {
         response.render('create', {title: 'Blogs | Create Blogs'});
     }
 
 }
-
-export const ViewRoutes = [
-    new Rest(
-        'get',
-        '/',
-        PageController,
-        'home',
-    ),
-    new Rest(
-        'get',
-        '/blogs',
-        PageController,
-        'blogs',
-    ),
-    new Rest(
-        'get',
-        '/blogs/create',
-        PageController,
-        'createBlog',
-    ),
-];
