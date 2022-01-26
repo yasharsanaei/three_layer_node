@@ -39,20 +39,6 @@ createConnection().then(async connection => {
 
     CreateApiPaths(app, new BlogResource());
 
-    // ApisRest.forEach(
-    //     rest => {
-    //         (app as any)[rest.type](rest.route, (req: Request, res: Response, next: Function) => {
-    //             const result = (new (rest.service as any))[rest.method](req, res, next);
-    //             if (result instanceof Promise) {
-    //                 result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
-    //
-    //             } else if (result !== null && result !== undefined) {
-    //                 res.json(result);
-    //             }
-    //         });
-    //     },
-    // );
-
     app.use((req: Request, res: Response) => {
         res.status(404).render('404', {title: '404'});
     });
