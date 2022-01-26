@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 import {BlogService} from '../service/blog.service';
 import {BlogEntity} from '../repository/entity/blog.entity';
 import 'reflect-metadata';
-import {PageRoute} from '../util/util';
+import {PageRoute} from '../util/decorators';
 
 export class PageController {
 
