@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 import {BlogService} from '../service/blog.service';
 import {BlogEntity} from '../repository/entity/blog.entity';
 import 'reflect-metadata';
-import {PageRoute} from '../util/decorators';
+import {GetMapping} from '../util/decorators';
 
 export class PageController {
 
@@ -11,18 +11,18 @@ export class PageController {
     constructor() {
     }
 
-    @PageRoute('/')
+    @GetMapping('/')
     async home(request: Request, response: Response, next: NextFunction) {
         const blogList: BlogEntity[] = await this.blogService.getAll(request, response, next);
         response.render('index', {title: 'Blogs | Home', blogs: blogList});
     }
 
-    @PageRoute('/blogs')
+    @GetMapping('/blogs')
     async blogs(request: Request, response: Response, next: NextFunction) {
         response.redirect('/');
     }
 
-    @PageRoute('/blogs/create')
+    @GetMapping('/blogs/create')
     async createBlog(request: Request, response: Response, next: NextFunction) {
         response.render('create', {title: 'Blogs | Create Blogs'});
     }
