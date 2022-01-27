@@ -1,8 +1,8 @@
-import {BaseService} from './base/base.service';
+import {BaseService} from '../_base/base.service';
 import {BlogEntity} from '../repository/entity/blog.entity';
 import {NextFunction, Request, Response} from 'express';
 import {BlogRepository} from '../repository/blog.repository';
-import {BaseRepository} from '../repository/base/base.repository';
+import {BaseRepository} from '../_base/base.repository';
 
 export class BlogService extends BaseService<BlogEntity, BaseRepository<BlogEntity>> {
 

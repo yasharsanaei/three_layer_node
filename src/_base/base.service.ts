@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express';
-import {BaseRepository} from '../../repository/base/base.repository';
-import {isIdInvalid} from '../../util/util';
+import {BaseRepository} from './base.repository';
+import {isIdInvalid} from '../util/util';
 
 export class BaseService<T, R extends BaseRepository<T>> {
 
