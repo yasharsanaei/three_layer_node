@@ -1,19 +1,8 @@
-import {Rest} from './base/rest';
 import {BlogService} from '../service/blog.service';
 import {GetMapping} from '../util/decorators';
-import {Express, NextFunction, Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import {BlogEntity} from '../repository/entity/blog.entity';
 import {BaseService} from '../service/base/base.service';
-
-export const BlogRest: Rest[] = [
-    new Rest(
-        'get',
-        `/api/blog/custom`,
-        BlogService,
-        'customGet',
-    ),
-    ...Rest.BaseRestPoints(BlogService, 'api/blog'),
-];
 
 export class BaseResource<T extends BaseService<any, any>> {
 
@@ -44,23 +33,3 @@ export class BlogResource extends BaseResource<BlogService> {
     }
 
 }
-
-const ResourceMethods = (resource: BlogResource): string[] => {
-    return Reflect.getMetadataKeys(resource);
-};
-
-export const CreateApiPaths = (app: Express, resource: BlogResource) => {
-    console.log('-------> Methods: ', ResourceMethods(resource));
-    ResourceMethods(resource).forEach(m => {
-        const type = Reflect.getMetadata(m, resource)['type'];
-        const route = Reflect.getMetadata(m, resource)['route'];
-        app[type](`/api${resource.basePath}${route}`, (req, res, next) => {
-            const result = resource[m](req, res, next);
-            if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
-            } else if (result !== null && result !== undefined) {
-                res.json(result);
-            }
-        });
-    });
-};

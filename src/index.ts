@@ -4,11 +4,10 @@ import * as express from 'express';
 import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
-import {ApisRest} from './rest/base/apis.rest';
 import * as path from 'path';
 import {PageController} from './controller/page.controller';
-import {GetPageRoutes} from './util/util';
-import {BlogResource, CreateApiPaths} from './rest/blog.rest';
+import {BlogResource} from './rest/blog.rest';
+import {CreateApiPaths, GetPageRoutes} from './util/decorators';
 
 createConnection().then(async connection => {
 
@@ -23,20 +22,8 @@ createConnection().then(async connection => {
     app.use(morgan('dev'));
     app.use(bodyParser.json());
 
-    GetPageRoutes(new PageController()).forEach(
-        rest => {
-            (app as any)[rest.type](rest.route, (req: Request, res: Response, next: Function) => {
-                const result = (new (rest.service as any))[rest.method](req, res, next);
-                if (result instanceof Promise) {
-                    result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
 
-                } else if (result !== null && result !== undefined) {
-                    res.json(result);
-                }
-            });
-        },
-    );
-
+    GetPageRoutes(app, new PageController());
     CreateApiPaths(app, new BlogResource());
 
     app.use((req: Request, res: Response) => {
