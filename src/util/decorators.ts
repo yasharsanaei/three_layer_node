@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import {PageController} from '../controller/page.controller';
 import {Express} from 'express';
-import {BaseResource} from '../rest/blog.resource';
+import {BaseResource} from '../_base/base.resource';
 
 export function PageRoute(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
