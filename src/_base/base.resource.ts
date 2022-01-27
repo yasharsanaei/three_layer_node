@@ -1,7 +1,7 @@
-import {BaseService} from '../../service/base/base.service';
-import {GetMapping} from '../../util/decorators';
+import {BaseService} from './base.service';
+import {GetMapping} from '../util/decorators';
 import {NextFunction, Request, Response} from 'express';
-import {BlogEntity} from '../../repository/entity/blog.entity';
+import {BlogEntity} from '../repository/entity/blog.entity';
 
 export class BaseResource<T extends BaseService<any, any>> {
 
