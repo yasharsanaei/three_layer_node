@@ -1,8 +1,7 @@
-import {BlogService} from '../service/blog.service';
-import {GetMapping} from '../util/decorators';
+import {BaseService} from '../../service/base/base.service';
+import {GetMapping} from '../../util/decorators';
 import {NextFunction, Request, Response} from 'express';
-import {BlogEntity} from '../repository/entity/blog.entity';
-import {BaseService} from '../service/base/base.service';
+import {BlogEntity} from '../../repository/entity/blog.entity';
 
 export class BaseResource<T extends BaseService<any, any>> {
 
@@ -22,14 +21,6 @@ export class BaseResource<T extends BaseService<any, any>> {
     @GetMapping('/:id')
     async getById(request: Request, response: Response, next: NextFunction): Promise<BlogEntity[]> {
         return await this.service.getById(request, response, next);
-    }
-
-}
-
-export class BlogResource extends BaseResource<BlogService> {
-
-    constructor() {
-        super('/blog', new BlogService());
     }
 
 }

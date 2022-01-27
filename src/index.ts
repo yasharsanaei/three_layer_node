@@ -6,7 +6,7 @@ import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as path from 'path';
 import {PageController} from './controller/page.controller';
-import {BlogResource} from './rest/blog.rest';
+import {BlogResource} from './rest/blog.resource';
 import {CreateApiPaths, GetPageRoutes} from './util/decorators';
 
 createConnection().then(async connection => {
